@@ -1,4 +1,4 @@
-from tictactoe import *
+from tictactoe.tictactoe import *
 
 def test_terminal_empty_board():
     test_board = [[EMPTY, EMPTY, EMPTY],

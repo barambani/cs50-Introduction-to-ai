@@ -1,4 +1,4 @@
-from minesweeper import *
+from minesweeper.minesweeper import *
 
 from hypothesis import given
 

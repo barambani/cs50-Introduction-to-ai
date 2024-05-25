@@ -1,4 +1,4 @@
-from tictactoe import *
+from tictactoe.tictactoe import *
 
 def test_minimax_1():
     test_board = [[EMPTY, O, X],

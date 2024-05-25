@@ -1,4 +1,4 @@
-from minesweeper import *
+from minesweeper.minesweeper import *
 
 def known_mines_test_1():
     cells = [(0, 0), (0, 1)]

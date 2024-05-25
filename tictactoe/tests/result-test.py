@@ -1,6 +1,6 @@
 import pytest
 
-from tictactoe import *
+from tictactoe.tictactoe import *
 
 def test_result_empty_board():
     test_board = [[EMPTY, EMPTY, EMPTY],

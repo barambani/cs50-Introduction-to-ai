@@ -18,8 +18,16 @@ LOST = 'Lost'
 class Simulation():
     def __init__(self) -> None:
         system_random = random.SystemRandom()
-        self.height = system_random.randrange(start = MIN_HEIGHT, stop = MAX_HEIGHT)
-        width_height_ratio = system_random.uniform(MIN_WIDTH_HEIGHT_RATIO, MAX_WIDTH_HEIGHT_RATIO)
+        self.height = system_random.randrange(
+            start = MIN_HEIGHT,
+            stop = MAX_HEIGHT
+        ) if MIN_HEIGHT < MAX_HEIGHT else MIN_HEIGHT
+
+        width_height_ratio = system_random.uniform(
+            MIN_WIDTH_HEIGHT_RATIO,
+            MAX_WIDTH_HEIGHT_RATIO
+        ) if MIN_WIDTH_HEIGHT_RATIO < MAX_WIDTH_HEIGHT_RATIO else MIN_WIDTH_HEIGHT_RATIO
+
         self.width = int(self.height * width_height_ratio)
         self.mines = int((self.height * self.width) / 6)
 
@@ -48,7 +56,7 @@ def run(simulation: Simulation) -> str:
 
         if simulation.game.is_mine(next_move):
             simulation.outcome = LOST
-            simulation.lost_after_moves = len(simulation.ai.moves_made)
+            simulation.lost_after_moves = len(simulation.ai.moves_made) + 1
             break
 
         nearby = simulation.game.nearby_mines(next_move)
@@ -80,16 +88,13 @@ def run_simulator():
     print(f'{datetime.now():%Y-%m-%d %H:%M:%S}')
     print()
 
-    lost_in_less_than_5 = [lost_game for lost_game in lost_games if lost_game.lost_after_moves < 5]
-    lost_in_5_to_10 = [lost_game for lost_game in lost_games if 5 < lost_game.lost_after_moves < 10]
-    lost_in_10_to_100 = [lost_game for lost_game in lost_games if 10 < lost_game.lost_after_moves < 100]
-    lost_in_100_to_500 = [lost_game for lost_game in lost_games if 100 < lost_game.lost_after_moves < 500]
-    lost_in_500_to_1000 = [lost_game for lost_game in lost_games if 500 < lost_game.lost_after_moves < 1000]
-    lost_in_1000_to_total_minus_10 = [lost_game for lost_game in lost_games if 1000 < lost_game.lost_after_moves and lost_game.remaining_moves() > 10]
-    lost_in_total_minus_10 = [lost_game for lost_game in lost_games if lost_game.remaining_moves() <= 10]
-
-    lost_in_less_than_5 = [lost_game for lost_game in lost_games if lost_game.lost_after_moves < 5]
-    lost_in_5_to_10 = [lost_game for lost_game in lost_games if 5 < lost_game.lost_after_moves < 10]
+    lost_after_1_move = [lost_game for lost_game in lost_games if lost_game.lost_after_moves == 1]
+    lost_after_2_move = [lost_game for lost_game in lost_games if lost_game.lost_after_moves == 2]
+    lost_after_3_move = [lost_game for lost_game in lost_games if lost_game.lost_after_moves == 3]
+    lost_after_4_move = [lost_game for lost_game in lost_games if lost_game.lost_after_moves == 4]
+    lost_after_5_move = [lost_game for lost_game in lost_games if lost_game.lost_after_moves == 5]
+    lost_in_less_than_6 = [lost_game for lost_game in lost_games if lost_game.lost_after_moves < 6]
+    lost_in_6_to_10 = [lost_game for lost_game in lost_games if 6 < lost_game.lost_after_moves < 10]
     lost_in_10_to_100 = [lost_game for lost_game in lost_games if 10 < lost_game.lost_after_moves < 100]
     lost_in_100_to_500 = [lost_game for lost_game in lost_games if 100 < lost_game.lost_after_moves < 500]
     lost_in_500_to_1000 = [lost_game for lost_game in lost_games if 500 < lost_game.lost_after_moves < 1000]
@@ -99,8 +104,13 @@ def run_simulator():
     print(f'Won: {len(won_games)/len(results):.0%}')
     print(f'Lost: {len(lost_games)/len(results):.0%}')
     print()
-    print(f'Lost in less than 5 moves: {len(lost_in_less_than_5)/len(lost_games):.1%}')
-    print(f'Lost in 5 to 10 moves: {len(lost_in_5_to_10)/len(lost_games):.1%}')
+    print(f'Lost in 1 move: {len(lost_after_1_move)/len(lost_games):.1%}')
+    print(f'Lost in 2 move: {len(lost_after_2_move)/len(lost_games):.1%}')
+    print(f'Lost in 3 move: {len(lost_after_3_move)/len(lost_games):.1%}')
+    print(f'Lost in 4 move: {len(lost_after_4_move)/len(lost_games):.1%}')
+    print(f'Lost in 5 move: {len(lost_after_5_move)/len(lost_games):.1%}')
+    print(f'Lost in less than 6 moves: {len(lost_in_less_than_6)/len(lost_games):.1%}')
+    print(f'Lost in 5 to 10 moves: {len(lost_in_6_to_10)/len(lost_games):.1%}')
     print(f'Lost in 10 to 100 moves: {len(lost_in_10_to_100)/len(lost_games):.1%}')
     print(f'Lost in 100 to 500 moves: {len(lost_in_100_to_500)/len(lost_games):.1%}')
     print(f'Lost in 500 to 1000 moves: {len(lost_in_500_to_1000)/len(lost_games):.1%}')

@@ -2,7 +2,7 @@ from minesweeper.minesweeper import *
 
 from hypothesis import given
 
-from tests import strategies as my_st
+from . import strategies as my_st
 
 
 @given(mines = my_st.cells(10, 10), moves_made = my_st.cells(10, 10))

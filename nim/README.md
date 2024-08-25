@@ -1,0 +1,4 @@
+# Nim
+
+- [Lecture](https://cs50.harvard.edu/ai/2024/notes/4/)
+- [Project](https://cs50.harvard.edu/ai/2024/projects/4/nim/#nim)
